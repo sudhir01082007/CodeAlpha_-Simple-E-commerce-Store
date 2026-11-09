@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
+const path = require('path');
+const dotenv = require('dotenv');
 const ensureDefaultUsers = require('./ensureDefaultUsers');
+
+// Load environment variables from backend/.env if not already loaded
+dotenv.config({ path: path.join(__dirname, '../.env') });
+dotenv.config();
 
 /**
  * MongoDB Database Connection Manager
- * Connects via Mongoose using the connection URI from environment variables.
+ * Connects via Mongoose using the connection URI from environment variables (process.env.MONGODB_URI).
  * Supports both local MongoDB and cloud MongoDB Atlas instances.
  */
 const connectDB = async () => {
@@ -35,10 +41,24 @@ const connectDB = async () => {
 
     return conn;
   } catch (error) {
+    const mongoURI = process.env.MONGODB_URI || '';
+    const isAtlas = mongoURI.includes('mongodb+srv://') || mongoURI.includes('mongodb.net');
+
     console.error(`❌ MongoDB Connection Failed: ${error.message}`);
-    console.log(`💡 Setup Note:`);
-    console.log(`   - If running locally: Ensure MongoDB Community Server service is started.`);
-    console.log(`   - If using MongoDB Atlas: Set MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/codealpha_ecommerce in backend/.env`);
+    if (isAtlas) {
+      console.log(`\n💡 MongoDB Atlas Troubleshooting:`);
+      if (error.message.includes('auth') || error.message.includes('Authentication')) {
+        console.log(`   - Authentication Error: Check the username and password in your MONGODB_URI in backend/.env.`);
+        console.log(`   - Note: If your password contains special characters (@, :, /, #, etc.), URL-encode them or use an alphanumeric password.`);
+      } else if (error.message.includes('timed out') || error.message.includes('selection')) {
+        console.log(`   - Network / IP Whitelist Error: Your IP may not be allowed in MongoDB Atlas.`);
+        console.log(`     Go to Atlas Dashboard -> "Network Access" -> Click "Add IP Address" -> Select "Allow Access from Anywhere" (0.0.0.0/0).`);
+      } else {
+        console.log(`   - Ensure your connection string format is: mongodb+srv://<username>:<password>@<cluster>.mongodb.net/codealpha_ecommerce?retryWrites=true&w=majority`);
+      }
+    } else {
+      console.log(`💡 Local MongoDB Note: Ensure your local MongoDB Community Server service is running.`);
+    }
     return null;
   }
 };

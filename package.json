@@ -6,7 +6,8 @@
     "start": "cd backend && npm start",
     "dev": "cd backend && npm run dev",
     "seed": "cd backend && npm run seed",
-    "test": "cd backend && npm test"
+    "test": "cd backend && npm test",
+    "verify:db": "cd backend && npm run verify:db"
   },
   "keywords": [
     "codealpha",
