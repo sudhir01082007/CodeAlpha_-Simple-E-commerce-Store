@@ -1,0 +1,22 @@
+{
+  "name": "codealpha-ecommerce-project",
+  "version": "1.0.0",
+  "description": "CodeAlpha Full Stack Development Internship E-Commerce Store",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "seed": "cd backend && npm run seed",
+    "test": "cd backend && npm test"
+  },
+  "keywords": [
+    "codealpha",
+    "ecommerce",
+    "mern",
+    "mongodb",
+    "express",
+    "javascript"
+  ],
+  "author": "CodeAlpha Intern",
+  "license": "MIT"
+}
+

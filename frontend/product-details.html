@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - CodeAlpha Store</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🛍️</span>
+        <span>CodeAlpha<span style="color: var(--primary);">Store</span></span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="products.html" class="nav-link active">Shop Products</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="orders.html" class="nav-link">My Orders</a></li>
+          <li><a href="profile.html" class="nav-link">Profile</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-icon-btn" title="View Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+        <div id="auth-nav-container"></div>
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumb Navigation -->
+  <div style="background: #fff; border-bottom: 1px solid var(--border-color); padding: 1rem 0;">
+    <div class="container">
+      <div style="font-size: 0.88rem; color: var(--gray-500); display: flex; gap: 0.5rem; align-items: center;">
+        <a href="index.html" style="color: var(--primary);">Home</a>
+        <span>/</span>
+        <a href="products.html" style="color: var(--primary);">Products</a>
+        <span>/</span>
+        <span id="breadcrumb-product-name" style="color: var(--gray-700); font-weight: 600;">Product Details</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Product Detail Content -->
+  <main class="section">
+    <div class="container">
+      
+      <div id="product-detail-container">
+        <!-- Rendered dynamically by product-details.js -->
+        <div style="text-align: center; padding: 4rem;">
+          <p style="color: var(--gray-500);">Loading product details from MongoDB...</p>
+        </div>
+      </div>
+
+      <!-- Related Products Section -->
+      <section style="margin-top: 4rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--secondary); margin-bottom: 1.5rem;">
+          Related Products You Might Like
+        </h2>
+        <div class="products-grid" id="related-products-container">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 CodeAlpha E-Commerce Store. All rights reserved.</p>
+        <p class="internship-tag">CodeAlpha Full Stack Development Internship</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/product-details.js"></script>
+</body>
+</html>
+

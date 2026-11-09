@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeAlpha Store - Modern Full-Stack E-Commerce</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🛍️</span>
+        <span>CodeAlpha<span style="color: var(--primary);">Store</span></span>
+        <span class="badge-tag">MERN Stack</span>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="products.html" class="nav-link">Shop Products</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="orders.html" class="nav-link">My Orders</a></li>
+          <li><a href="profile.html" class="nav-link">Profile</a></li>
+        </ul>
+      </nav>
+
+      <!-- Action Items -->
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-icon-btn" title="View Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+
+        <!-- Dynamic Auth Button / User Dropdown -->
+        <div id="auth-nav-container">
+          <!-- Populated dynamically via ui.js -->
+        </div>
+
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>✨</span> Next-Gen Shopping Experience
+          </div>
+          <h1 class="hero-title">
+            Discover Quality Products <span>Crafted for You</span>
+          </h1>
+          <p class="hero-subtitle">
+            Explore our curated catalog of top-tier electronics, modern fashion, premium accessories, and home essentials at unbeatable prices.
+          </p>
+          <div class="hero-cta">
+            <a href="products.html" class="btn btn-primary btn-lg">Explore Catalog &rarr;</a>
+            <a href="products.html?category=Electronics" class="btn btn-outline btn-lg" style="color:#fff; border-color: rgba(255,255,255,0.3);">Featured Tech</a>
+          </div>
+        </div>
+
+        <div class="hero-banner-card">
+          <div class="hero-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&auto=format&fit=crop&q=80" alt="Online Shopping Collection">
+          </div>
+          <div class="hero-floating-card">
+            <div class="floating-icon">🔥</div>
+            <div>
+              <strong style="display:block; font-size:0.95rem;">Flash Deal: Up to 30% Off</strong>
+              <small style="color:var(--gray-500);">Use code <span style="font-weight:700; color:var(--primary);">ALPHA2026</span></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features / Value Proposition Bar -->
+  <section class="features-bar">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🚚</div>
+          <div class="feature-info">
+            <h4>Free Express Shipping</h4>
+            <p>On all orders above $50</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-info">
+            <h4>Secure Payments</h4>
+            <p>Encrypted checkout guarantee</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔄</div>
+          <div class="feature-info">
+            <h4>30 Days Return</h4>
+            <p>Hassle-free money back</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎧</div>
+          <div class="feature-info">
+            <h4>24/7 Support</h4>
+            <p>Dedicated customer care</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Shop by Category</h2>
+          <p class="section-subtitle">Find exactly what you're looking for across our popular departments</p>
+        </div>
+        <a href="products.html" class="btn btn-outline btn-sm">All Categories &rarr;</a>
+      </div>
+
+      <div class="categories-grid" id="categories-container">
+        <!-- Rendered dynamically via home.js -->
+        <a href="products.html?category=Electronics" class="category-card">
+          <div class="category-icon-box">💻</div>
+          <span class="category-name">Electronics</span>
+          <span class="category-hint">Laptops, Audio & Wearables</span>
+        </a>
+        <a href="products.html?category=Fashion" class="category-card">
+          <div class="category-icon-box">👕</div>
+          <span class="category-name">Fashion</span>
+          <span class="category-hint">Jackets, Hoodies & Apparel</span>
+        </a>
+        <a href="products.html?category=Footwear" class="category-card">
+          <div class="category-icon-box">👟</div>
+          <span class="category-name">Footwear</span>
+          <span class="category-hint">Sneakers & Running Shoes</span>
+        </a>
+        <a href="products.html?category=Accessories" class="category-card">
+          <div class="category-icon-box">⌚</div>
+          <span class="category-name">Accessories</span>
+          <span class="category-hint">Watches, Bags & Sunglasses</span>
+        </a>
+        <a href="products.html?category=Home%20%26%20Living" class="category-card">
+          <div class="category-icon-box">🛋️</div>
+          <span class="category-name">Home & Living</span>
+          <span class="category-hint">Ergonomic Chairs & Kitchen</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="section" style="background: #fff; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Featured Products</h2>
+          <p class="section-subtitle">Hand-picked top rated picks trending this week</p>
+        </div>
+        <a href="products.html" class="btn btn-primary btn-sm">View Full Catalog &rarr;</a>
+      </div>
+
+      <div class="products-grid" id="featured-products-container">
+        <!-- Dynamic product cards rendered via home.js -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+          <p>Loading featured products from database...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promo Banner -->
+  <section class="section">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, var(--secondary) 0%, #1e3a8a 100%); color: #fff; border-radius: var(--radius-lg); padding: 3.5rem 2rem; text-align: center;">
+        <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.75rem;">Experience Seamless Shopping Today</h2>
+        <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 2rem; font-size: 1.05rem;">
+          Join thousands of satisfied shoppers. Enjoy fast shipping, secure MongoDB-backed checkout, and 24/7 dedicated support.
+        </p>
+        <a href="products.html" class="btn btn-primary btn-lg">Browse All Products</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="color: #fff; margin-bottom: 1rem;">
+            <span class="brand-icon">🛍️</span>
+            <span>CodeAlphaStore</span>
+          </div>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">
+            A responsive full-stack E-Commerce store built with Node.js, Express, MongoDB, and modern Vanilla JavaScript for the CodeAlpha Full Stack Development Internship.
+          </p>
+          <div style="display: flex; gap: 0.75rem;">
+            <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.8rem;">MongoDB</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.8rem;">Express.js</span>
+            <span style="background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.8rem;">JWT & bcrypt</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">All Products</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="orders.html">Order History</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Popular Categories</h4>
+          <ul class="footer-links">
+            <li><a href="products.html?category=Electronics">Electronics</a></li>
+            <li><a href="products.html?category=Fashion">Fashion</a></li>
+            <li><a href="products.html?category=Footwear">Footwear</a></li>
+            <li><a href="products.html?category=Accessories">Accessories</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Internship Project</h4>
+          <p style="font-size: 0.88rem; line-height: 1.6; margin-bottom: 1rem;">
+            Developed for <strong>CodeAlpha</strong> Web Development Internship Task.
+          </p>
+          <a href="login.html" class="btn btn-outline btn-sm" style="color: #fff; border-color: rgba(255,255,255,0.3);">User Portal</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 CodeAlpha E-Commerce Store. All rights reserved.</p>
+        <p class="internship-tag">CodeAlpha Full Stack Development Internship Project</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
+

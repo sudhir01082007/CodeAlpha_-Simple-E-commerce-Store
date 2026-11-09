@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - CodeAlpha Store</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🛍️</span>
+        <span>CodeAlpha<span style="color: var(--primary);">Store</span></span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="products.html" class="nav-link">Shop Products</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="orders.html" class="nav-link">My Orders</a></li>
+          <li><a href="profile.html" class="nav-link active">Profile</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-icon-btn" title="View Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+        <div id="auth-nav-container"></div>
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Title Header -->
+  <section style="background: #fff; border-bottom: 1px solid var(--border-color); padding: 1.75rem 0;">
+    <div class="container">
+      <h1 style="font-size: 1.85rem; font-weight: 800; color: var(--secondary);">My Profile</h1>
+      <p style="color: var(--gray-500); font-size: 0.9rem; margin-top: 0.25rem;">Manage your account details and view your account activity.</p>
+    </div>
+  </section>
+
+  <!-- Profile Content Container -->
+  <main class="section">
+    <div class="container">
+      <div id="profile-content-container">
+        <!-- Rendered dynamically by profile.js -->
+        <div style="text-align: center; padding: 4rem;">
+          <p style="color: var(--gray-500);">Loading profile details from MongoDB...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 CodeAlpha E-Commerce Store. All rights reserved.</p>
+        <p class="internship-tag">CodeAlpha Full Stack Development Internship</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>
+
