@@ -19,11 +19,14 @@ async function testConnection() {
     process.exit(1);
   }
   
-  // Safely mask any credentials in connection string
+  // Safely extract username and mask password
+  const userMatch = uri.match(/\/\/([^:]+):/);
+  const username = userMatch ? userMatch[1] : 'N/A';
   const maskedURI = uri.includes('@')
-    ? uri.replace(/\/\/[^@]+@/, '//***:***@')
+    ? uri.replace(/\/\/[^@]+@/, `//${username}:***@`)
     : uri;
   console.log(`  ✓ process.env.MONGODB_URI is configured`);
+  console.log(`  ✓ Database Username: "${username}"`);
   console.log(`  ✓ Connection URI Target: ${maskedURI}`);
   const targetDb = uri.includes('/') ? uri.split('/').pop().split('?')[0] : 'default';
   console.log(`  ✓ Target Database: "${targetDb}"`);
