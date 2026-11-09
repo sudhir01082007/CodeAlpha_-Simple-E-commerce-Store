@@ -19,10 +19,14 @@ async function testConnection() {
     process.exit(1);
   }
   
-  // Mask connection string to protect credentials
-  const maskedURI = uri.replace(/\/\/[^:]+:[^@]+@/, '//***:***@');
-  console.log(`  ✓ process.env.MONGODB_URI is loaded: "${maskedURI}"`);
-  console.log(`  ✓ Target Database: "${uri.split('/').pop().split('?')[0]}"`);
+  // Safely mask any credentials in connection string
+  const maskedURI = uri.includes('@')
+    ? uri.replace(/\/\/[^@]+@/, '//***:***@')
+    : uri;
+  console.log(`  ✓ process.env.MONGODB_URI is configured`);
+  console.log(`  ✓ Connection URI Target: ${maskedURI}`);
+  const targetDb = uri.includes('/') ? uri.split('/').pop().split('?')[0] : 'default';
+  console.log(`  ✓ Target Database: "${targetDb}"`);
 
   console.log('\n2. Testing Database Connection via connectDB():');
   const conn = await connectDB();
@@ -45,3 +49,4 @@ async function testConnection() {
 }
 
 testConnection();
+
