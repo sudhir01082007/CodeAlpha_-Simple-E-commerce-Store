@@ -101,19 +101,28 @@ const createOrder = async (req, res, next) => {
       const taxPrice = Number((itemsPrice * 0.08).toFixed(2));
       const totalPrice = Number((itemsPrice + shippingPrice + taxPrice).toFixed(2));
 
+      // Determine payment status based on payment method
+      const normalizedPayment = (paymentMethod || 'Cash on Delivery').trim();
+      const isCOD =
+        normalizedPayment.toLowerCase().includes('cash') ||
+        normalizedPayment.toLowerCase().includes('cod');
+      const paymentStatus = isCOD ? 'Pending' : 'Demo Payment Successful';
+      const isPaid = !isCOD;
+
       // Create Order in MongoDB
       const order = new Order({
         user: req.user._id,
         items: orderItems,
         shippingAddress,
-        paymentMethod: paymentMethod || 'Cash on Delivery',
+        paymentMethod: normalizedPayment,
+        paymentStatus,
         itemsPrice,
         shippingPrice,
         taxPrice,
         totalPrice,
         status: 'Confirmed',
-        isPaid: paymentMethod !== 'Cash on Delivery',
-        paidAt: paymentMethod !== 'Cash on Delivery' ? new Date() : null
+        isPaid,
+        paidAt: isPaid ? new Date() : null
       });
 
       const savedOrder = await order.save();
@@ -122,9 +131,14 @@ const createOrder = async (req, res, next) => {
       cart.items = [];
       await cart.save();
 
+      const responseMessage = isCOD
+        ? 'Order placed successfully! Payment status: Pending (Cash on Delivery).'
+        : 'Demo Payment Successful! Order placed successfully.';
+
       return res.status(201).json({
         success: true,
-        message: 'Order placed successfully!',
+        message: responseMessage,
+        paymentStatus,
         data: savedOrder
       });
     } catch (orderError) {

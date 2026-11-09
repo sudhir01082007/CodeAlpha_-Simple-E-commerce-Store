@@ -46,6 +46,11 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: 'Cash on Delivery'
     },
+    paymentStatus: {
+      type: String,
+      required: true,
+      default: 'Pending'
+    },
     itemsPrice: {
       type: Number,
       required: true,

@@ -17,7 +17,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('newOrder')) {
     const banner = document.getElementById('new-order-banner');
-    if (banner) banner.style.display = 'block';
+    const titleEl = document.getElementById('new-order-title');
+    const subtitleEl = document.getElementById('new-order-subtitle');
+    const method = urlParams.get('method') || '';
+
+    if (banner) {
+      banner.style.display = 'block';
+
+      const isCOD =
+        method.toLowerCase().includes('cash') ||
+        method.toLowerCase().includes('cod');
+
+      if (isCOD) {
+        if (titleEl) titleEl.textContent = 'Order Placed Successfully! (Cash on Delivery)';
+        if (subtitleEl) {
+          subtitleEl.textContent = 'Your order is stored in MongoDB with Payment Status: Pending. Please pay upon delivery.';
+        }
+      } else if (method) {
+        if (titleEl) titleEl.textContent = 'Demo Payment Successful! Order Placed 🎉';
+        if (subtitleEl) {
+          subtitleEl.textContent = `Demo transaction completed via ${method}. Payment status: Demo Payment Successful.`;
+        }
+      }
+    }
   }
 
   await loadOrders();
@@ -79,6 +101,9 @@ function renderOrdersList(container, orders) {
           const itemsCount = (order.items || []).reduce((sum, i) => sum + i.quantity, 0);
           const orderIdDisplay = order._id.length > 8 ? order._id.substring(order._id.length - 8).toUpperCase() : order._id.toUpperCase();
 
+          const paymentStatus = order.paymentStatus || (order.isPaid ? 'Demo Payment Successful' : 'Pending');
+          const isDemoSuccess = paymentStatus === 'Demo Payment Successful';
+
           const shipping = order.shippingAddress || {
             fullName: 'Customer',
             phone: 'N/A',
@@ -106,13 +131,22 @@ function renderOrdersList(container, orders) {
                   <strong style="color: var(--primary);">${formatPrice(order.totalPrice)}</strong>
                 </div>
                 <div class="order-meta-item">
-                  <span>Payment</span>
+                  <span>Payment Method</span>
                   <strong>${order.paymentMethod}</strong>
+                </div>
+                <div class="order-meta-item">
+                  <span>Payment Status</span>
+                  <strong style="${isDemoSuccess ? 'color: var(--success);' : 'color: #b45309;'}">
+                    ${paymentStatus}
+                  </strong>
                 </div>
               </div>
 
-              <div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem;">
                 <span class="status-pill ${statusClass}">${order.status}</span>
+                <span class="payment-pill ${isDemoSuccess ? 'demo-success' : 'pending'}">
+                  ${isDemoSuccess ? '✓ Demo Payment Successful' : '⏳ Pending'}
+                </span>
               </div>
             </div>
 

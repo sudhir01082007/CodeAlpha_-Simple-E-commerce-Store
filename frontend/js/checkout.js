@@ -125,44 +125,45 @@ function renderCheckoutView(container, cart, user) {
                 <input type="radio" name="paymentMethod" value="Cash on Delivery" checked>
                 <div class="payment-content">
                   <strong>💵 Cash on Delivery (COD)</strong>
-                  <div style="font-size: 0.8rem; color: var(--gray-500);">Pay in cash when order is safely delivered to your doorstep</div>
+                  <div style="font-size: 0.8rem; color: var(--gray-500);">Pay in cash when order is safely delivered to your doorstep (Payment: Pending)</div>
                 </div>
               </label>
 
               <label class="payment-option-label">
                 <input type="radio" name="paymentMethod" value="Credit/Debit Card">
                 <div class="payment-content">
-                  <strong>💳 Credit / Debit Card (Demo Gateway)</strong>
-                  <div style="font-size: 0.8rem; color: var(--gray-500);">Visa, MasterCard, RuPay, American Express</div>
+                  <strong>💳 Credit / Debit Card (Demo Simulation)</strong>
+                  <div style="font-size: 0.8rem; color: var(--gray-500);">Simulated demo card payment. No real card numbers or CVV collected.</div>
                 </div>
               </label>
 
               <label class="payment-option-label">
                 <input type="radio" name="paymentMethod" value="UPI / Online">
                 <div class="payment-content">
-                  <strong>⚡ Instant UPI / Net Banking</strong>
-                  <div style="font-size: 0.8rem; color: var(--gray-500);">Google Pay, PhonePe, Paytm, BHIM</div>
+                  <strong>⚡ Instant UPI / Net Banking (Demo Simulation)</strong>
+                  <div style="font-size: 0.8rem; color: var(--gray-500);">Simulated instant payment. No UPI ID, bank account, or PIN collected.</div>
                 </div>
               </label>
             </div>
 
-            <!-- Demo Card Fields (Hidden by default, shown if Card chosen) -->
-            <div id="card-fields" style="display: none; margin-top: 1.25rem; background: var(--gray-50); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              <div class="form-group">
-                <label class="form-label">Card Number</label>
-                <input type="text" class="form-control" placeholder="4532 •••• •••• 8892" maxlength="19">
+            <!-- Demo Card Payment Notice (No financial data collected) -->
+            <div id="card-fields" style="display: none; margin-top: 1.25rem; background: #eff6ff; padding: 1.15rem; border-radius: var(--radius-md); border: 1px solid #bfdbfe; font-size: 0.85rem; color: #1e40af;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; margin-bottom: 0.35rem;">
+                <span>💳</span> Demo Card Payment Simulation
               </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Expiry (MM/YY)</label>
-                  <input type="text" class="form-control" placeholder="12/28" maxlength="5">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">CVV</label>
-                  <input type="password" class="form-control" placeholder="•••" maxlength="3">
-                </div>
+              <p style="margin: 0; font-size: 0.82rem; color: #2563eb; line-height: 1.5;">
+                This is a simulated demo payment option. No real card number, CVV, or OTP is collected. Your payment status will be recorded as <strong>"Demo Payment Successful"</strong> upon placing the order.
+              </p>
+            </div>
+
+            <!-- Demo UPI Payment Notice (No financial data collected) -->
+            <div id="upi-fields" style="display: none; margin-top: 1.25rem; background: #f0fdf4; padding: 1.15rem; border-radius: var(--radius-md); border: 1px solid #bbf7d0; font-size: 0.85rem; color: #166534;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; margin-bottom: 0.35rem;">
+                <span>⚡</span> Demo UPI Payment Simulation
               </div>
-              <small style="color: var(--gray-500);">* Demonstration sandbox card inputs.</small>
+              <p style="margin: 0; font-size: 0.82rem; color: #16a34a; line-height: 1.5;">
+                This is a simulated demo payment option. No real UPI ID, bank account, or PIN is collected. Your payment status will be recorded as <strong>"Demo Payment Successful"</strong> upon placing the order.
+              </p>
             </div>
           </div>
 
@@ -226,11 +227,16 @@ function renderCheckoutView(container, cart, user) {
 function setupCheckoutEvents() {
   const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
   const cardFields = document.getElementById('card-fields');
+  const upiFields = document.getElementById('upi-fields');
 
   paymentRadios.forEach((radio) => {
     radio.addEventListener('change', (e) => {
+      const selected = e.target.value;
       if (cardFields) {
-        cardFields.style.display = e.target.value === 'Credit/Debit Card' ? 'block' : 'none';
+        cardFields.style.display = selected === 'Credit/Debit Card' ? 'block' : 'none';
+      }
+      if (upiFields) {
+        upiFields.style.display = selected === 'UPI / Online' ? 'block' : 'none';
       }
     });
   });
@@ -267,11 +273,20 @@ function setupCheckoutEvents() {
         const res = await API.orders.create(orderPayload);
 
         if (res.success && res.data) {
-          showToast('Order placed successfully! 🎉', 'success');
+          const isCOD =
+            paymentMethod.toLowerCase().includes('cash') ||
+            paymentMethod.toLowerCase().includes('cod');
+
+          if (isCOD) {
+            showToast('Order placed successfully! Payment status: Pending.', 'info');
+          } else {
+            showToast('Demo Payment Successful! Order placed successfully. 🎉', 'success');
+          }
+
           updateCartBadge();
 
           setTimeout(() => {
-            window.location.href = `orders.html?newOrder=${res.data._id}`;
+            window.location.href = `orders.html?newOrder=${res.data._id}&method=${encodeURIComponent(paymentMethod)}`;
           }, 900);
         }
       } catch (error) {
