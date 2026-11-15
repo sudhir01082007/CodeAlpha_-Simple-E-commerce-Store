@@ -17,7 +17,7 @@ const API_BASE = (() => {
   ) {
     return 'http://localhost:5000/api';
   }
-  return '/api';
+  return 'https://codealpha-simple-e-commerce-store-drts.onrender.com/api';
 })();
 
 const Storage = {
